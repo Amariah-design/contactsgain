@@ -22,8 +22,6 @@ const interests = [
 
 const adminNumber = "2349060976683";
 
-// Demonstration contacts only.
-// Replace these with approved member contacts before publishing.
 const demoContacts = [
     { name: "Demo Directory Member One", phone: "+12025550101" },
     { name: "Demo Directory Member Two", phone: "+12025550102" },
@@ -51,13 +49,13 @@ function createVcf() {
     const anchor = document.createElement("a");
 
     anchor.href = url;
-    anchor.download = "Linky-directory.vcf";
+    anchor.download = "Contacts-Gain-directory.vcf";
 
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
 
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export default function Exchange() {
@@ -74,11 +72,7 @@ export default function Exchange() {
     const [error, setError] = useState("");
 
     const update = (field, value) => {
-        setForm((current) => ({
-            ...current,
-            [field]: value,
-        }));
-
+        setForm((current) => ({ ...current, [field]: value }));
         setError("");
     };
 
@@ -105,9 +99,9 @@ export default function Exchange() {
         const memberNumber = `${form.countryCode}${cleanPhone}`;
 
         const message = [
-            "Hello Admin, I want to join the Linky Contact Exchange community.",
+            "Hello Admin, I want to join the Contacts Gain community.",
             "",
-            `Name: ${form.name}`,
+            `Name: ${form.name.trim()}`,
             `WhatsApp Number: ${memberNumber}`,
             `Interest: ${form.interest}`,
             "",
@@ -116,15 +110,11 @@ export default function Exchange() {
 
         const whatsappLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
 
-        const whatsappWindow = window.open(
-            whatsappLink,
-            "_blank",
-            "noopener,noreferrer",
-        );
+        const whatsappWindow = window.open(whatsappLink, "_blank");
 
         if (!whatsappWindow) {
             setError(
-                "WhatsApp could not be opened. Please allow pop-ups and try again.",
+                "WhatsApp could not be opened. Allow pop-ups or open WhatsApp manually and try again.",
             );
             return;
         }
@@ -132,84 +122,74 @@ export default function Exchange() {
         setMessageOpened(true);
     };
 
-    const confirmSent = () => {
-        setUnlocked(true);
-    };
-
     return (
-        <div className="space-y-8 pb-12">
-            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-                <div>
-                    <p className="text-xs font-bold uppercase tracking-[2px] text-[#168447]">
-                        Member exchange
-                    </p>
+        <div className="space-y-12 pb-10">
+            <section className="max-w-3xl">
+                <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[2px] text-[#72836B]">
+                    <span className="h-px w-8 bg-[#72836B]" />
+                    Member participation / 01
+                </p>
 
-                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                        Contact submission
-                    </h1>
+                <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-[-1.5px] sm:text-6xl">
+                    Every connection
+                    <br />
+                    starts with <span className="text-[#788B70]">you.</span>
+                </h1>
 
-                    <p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">
-                        Submit your WhatsApp details to the administrator to
-                        participate in the community directory.
-                    </p>
-                </div>
+                <p className="mt-6 max-w-xl text-sm leading-7 text-[#777B70]">
+                    Share your WhatsApp details with the administrator to
+                    participate in the community directory. Complete the
+                    submission process to unlock the available contact file.
+                </p>
+            </section>
 
-                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600">
-                    <Icon name="shield" size={15} className="text-[#168447]" />
-                    WhatsApp verification
-                </div>
-            </div>
-
-            <div className="grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
-                {/* SUBMISSION FORM */}
-
-                <section className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-                    <div>
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[1.5px] text-[#168447]">
-                            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#E9FAEF]">
-                                01
-                            </span>
-                            Your contribution
+            <div className="grid gap-12 xl:grid-cols-[1.1fr_.9fr]">
+                <section className="border-t-2 border-[#293D2D] pt-6">
+                    <div className="flex items-start justify-between gap-5">
+                        <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[2px] text-[#72836B]">
+                                Step 01 / Your details
+                            </p>
+                            <h2 className="mt-3 font-display text-2xl font-semibold">
+                                Make your contribution.
+                            </h2>
+                            <p className="mt-2 max-w-md text-xs leading-6 text-[#85877D]">
+                                Use a number you own and can receive WhatsApp
+                                messages on.
+                            </p>
                         </div>
 
-                        <h2 className="mt-4 text-xl font-bold text-slate-900">
-                            Submit your details
-                        </h2>
-
-                        <p className="mt-2 text-sm leading-6 text-slate-500">
-                            Your information will be sent directly to the
-                            platform administrator through WhatsApp.
-                        </p>
+                        <span className="font-display text-4xl font-medium text-[#D0D4C8]">
+                            01
+                        </span>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                    <form onSubmit={handleSubmit} className="mt-9 space-y-6">
                         <div>
-                            <label className="mb-2 block text-xs font-bold text-slate-700">
+                            <label className="mb-2 block text-[11px] font-bold text-[#454B40]">
                                 Full name or brand name
                             </label>
-
                             <input
                                 required
                                 value={form.name}
                                 onChange={(e) => update("name", e.target.value)}
-                                placeholder="e.g. Alex Designs"
+                                placeholder="Enter your name"
                                 maxLength={70}
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-[#25D366] focus:bg-white focus:ring-4 focus:ring-[#25D366]/10"
+                                className="w-full border-b border-[#DADBD1] bg-transparent px-0 py-4 text-sm outline-none placeholder:text-[#A4A69C] focus:border-[#53694F]"
                             />
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-xs font-bold text-slate-700">
+                            <label className="mb-2 block text-[11px] font-bold text-[#454B40]">
                                 WhatsApp number
                             </label>
-
-                            <div className="flex gap-2">
+                            <div className="grid grid-cols-[minmax(120px,.8fr)_1.2fr] gap-4">
                                 <select
                                     value={form.countryCode}
                                     onChange={(e) =>
                                         update("countryCode", e.target.value)
                                     }
-                                    className="w-[42%] rounded-xl border border-slate-200 bg-slate-50 px-3 py-3.5 text-sm outline-none focus:border-[#25D366] sm:w-[38%]"
+                                    className="min-w-0 border-b border-[#DADBD1] bg-transparent py-4 text-xs outline-none focus:border-[#53694F]"
                                 >
                                     {countryCodes.map((item) => (
                                         <option
@@ -231,22 +211,21 @@ export default function Exchange() {
                                     }
                                     placeholder="801 234 5678"
                                     maxLength={18}
-                                    className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-[#25D366] focus:bg-white focus:ring-4 focus:ring-[#25D366]/10"
+                                    className="min-w-0 border-b border-[#DADBD1] bg-transparent py-4 text-sm outline-none placeholder:text-[#A4A69C] focus:border-[#53694F]"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-xs font-bold text-slate-700">
-                                Primary interest
+                            <label className="mb-2 block text-[11px] font-bold text-[#454B40]">
+                                What are you interested in?
                             </label>
-
                             <select
                                 value={form.interest}
                                 onChange={(e) =>
                                     update("interest", e.target.value)
                                 }
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none focus:border-[#25D366]"
+                                className="w-full border-b border-[#DADBD1] bg-transparent py-4 text-sm outline-none focus:border-[#53694F]"
                             >
                                 {interests.map((interest) => (
                                     <option key={interest}>{interest}</option>
@@ -254,17 +233,16 @@ export default function Exchange() {
                             </select>
                         </div>
 
-                        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-4">
+                        <label className="flex cursor-pointer items-start gap-3 border border-[#E0E0D6] bg-[#F0F0E9] p-4">
                             <input
                                 type="checkbox"
                                 checked={form.consent}
                                 onChange={(e) =>
                                     update("consent", e.target.checked)
                                 }
-                                className="mt-0.5 h-4 w-4 accent-[#168447]"
+                                className="mt-1 h-4 w-4 accent-[#405A43]"
                             />
-
-                            <span className="text-xs leading-5 text-slate-600">
+                            <span className="text-[11px] leading-6 text-[#74786D]">
                                 I confirm that this is my number and I consent
                                 to sharing it with participating members of this
                                 contact exchange community.
@@ -274,7 +252,7 @@ export default function Exchange() {
                         {error && (
                             <p
                                 role="alert"
-                                className="rounded-xl bg-red-50 px-4 py-3 text-xs font-medium text-red-700"
+                                className="border-l-2 border-red-600 bg-red-50 px-4 py-3 text-xs text-red-700"
                             >
                                 {error}
                             </p>
@@ -283,149 +261,136 @@ export default function Exchange() {
                         <button
                             type="submit"
                             disabled={messageOpened}
-                            className="flex w-full items-center justify-center gap-3 rounded-xl bg-[#25D366] px-5 py-4 text-sm font-extrabold text-[#092114] transition hover:bg-[#48E17D] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex w-full items-center justify-between bg-[#293D2D] px-6 py-5 text-left text-xs font-bold text-white transition hover:bg-[#405A43] disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            <Icon name="message" size={18} />
-                            {messageOpened
-                                ? "WhatsApp message opened"
-                                : "Submit & unlock directory"}
+                            <span>
+                                {messageOpened
+                                    ? "WhatsApp message opened"
+                                    : "Send details to WhatsApp"}
+                            </span>
+                            <Icon name="arrow" size={18} />
                         </button>
+
+                        <p className="text-[10px] leading-5 text-[#999B91]">
+                            Your details are placed in a pre-filled WhatsApp
+                            message. Review and send the message yourself.
+                        </p>
                     </form>
                 </section>
 
-                {/* DOWNLOAD AND VERIFICATION */}
-
-                <div className="space-y-5">
-                    <section className="overflow-hidden rounded-3xl bg-[#101B2A] p-6 text-white sm:p-8">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[1.5px] text-slate-400">
-                                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-[#25D366]">
-                                    02
-                                </span>
-                                Directory access
-                            </div>
-
-                            <div
-                                className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${
-                                    unlocked
-                                        ? "bg-[#25D366]/15 text-[#6DE99A]"
-                                        : "bg-white/10 text-slate-300"
-                                }`}
+                <section className="space-y-8">
+                    <div className="bg-[#E9EAE1] p-7 sm:p-9">
+                        <div className="flex items-center justify-between border-b border-[#D5D9CE] pb-5">
+                            <p className="text-[10px] font-bold uppercase tracking-[2px] text-[#66745F]">
+                                Step 02 / Directory access
+                            </p>
+                            <span
+                                className={`text-[9px] font-bold uppercase tracking-[1px] ${unlocked ? "text-[#3D7042]" : "text-[#8C8F83]"}`}
                             >
-                                {unlocked ? "UNLOCKED" : "LOCKED"}
-                            </div>
+                                {unlocked
+                                    ? "Unlocked"
+                                    : "Awaiting confirmation"}
+                            </span>
                         </div>
 
-                        <div className="my-9 flex flex-col items-center text-center">
-                            <div
-                                className={`flex h-20 w-20 items-center justify-center rounded-3xl ${
-                                    unlocked
-                                        ? "bg-[#25D366] text-[#092114]"
-                                        : "bg-white/10 text-slate-400"
-                                }`}
-                            >
+                        <div className="py-10 text-center">
+                            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#C8D0C0] text-[#53694F]">
                                 <Icon
                                     name={unlocked ? "unlock" : "lock"}
-                                    size={34}
+                                    size={30}
                                 />
                             </div>
 
-                            <h2 className="mt-6 text-xl font-bold">
+                            <h2 className="mt-6 font-display text-2xl font-semibold">
                                 {unlocked
-                                    ? "Directory unlocked"
+                                    ? "Your access is open."
                                     : messageOpened
-                                      ? "Have you sent your message?"
-                                      : "Your directory is locked"}
+                                      ? "One last confirmation."
+                                      : "Your directory awaits."}
                             </h2>
 
-                            <p className="mt-3 max-w-xs text-xs leading-6 text-slate-400">
+                            <p className="mx-auto mt-3 max-w-xs text-xs leading-6 text-[#777B70]">
                                 {unlocked
-                                    ? "Your confirmation is complete. You can now download the VCF file."
+                                    ? "You have confirmed that you sent the WhatsApp message. You can now access the VCF download."
                                     : messageOpened
-                                      ? "Return to WhatsApp, send your details to the administrator, then come back here and confirm."
-                                      : "Submit your details to WhatsApp first. Then confirm that you have sent the message."}
+                                      ? "Go to WhatsApp, send your message to the administrator, then return here to confirm."
+                                      : "Complete your details and send your WhatsApp message to continue."}
                             </p>
                         </div>
 
-                        {!messageOpened && (
-                            <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
-                                <p className="text-xs text-slate-400">
-                                    Complete the form to continue.
-                                </p>
-                            </div>
-                        )}
-
                         {messageOpened && !unlocked && (
                             <button
-                                onClick={confirmSent}
-                                className="flex w-full items-center justify-center gap-3 rounded-xl bg-[#25D366] px-5 py-4 text-sm font-extrabold text-[#092114] transition hover:bg-[#48E17D]"
+                                onClick={() => setUnlocked(true)}
+                                className="flex w-full items-center justify-between bg-[#D5E2CC] px-5 py-4 text-xs font-bold text-[#293D2D] transition hover:bg-[#C8D9BC]"
                             >
-                                <Icon name="check" size={18} />
-                                I've sent the WhatsApp message
+                                I've sent the message
+                                <Icon name="check" size={17} />
                             </button>
                         )}
 
                         <button
                             onClick={createVcf}
                             disabled={!unlocked}
-                            className={`mt-3 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-sm font-extrabold transition ${
+                            className={`mt-3 flex w-full items-center justify-between px-5 py-4 text-xs font-bold transition ${
                                 unlocked
-                                    ? "bg-white text-slate-950 hover:bg-slate-100"
-                                    : "cursor-not-allowed bg-white/10 text-slate-500"
+                                    ? "bg-[#293D2D] text-white hover:bg-[#405A43]"
+                                    : "cursor-not-allowed bg-[#D5D7CE] text-[#92968B]"
                             }`}
                         >
-                            <Icon name="download" size={18} />
-                            Download VCF file
+                            Download contact file
+                            <Icon name="download" size={17} />
                         </button>
 
-                        <p className="mt-4 text-center text-[10px] leading-5 text-slate-500">
-                            Confirmation of your submission will be sent to the
-                            administrator via WhatsApp.
+                        <p className="mt-5 text-center text-[10px] leading-5 text-[#898D81]">
+                            Manual confirmation does not verify actual WhatsApp
+                            delivery. The administrator may need to check your
+                            submission separately.
                         </p>
-                    </section>
+                    </div>
 
-                    <section className="rounded-2xl border border-slate-200 bg-white p-6">
-                        <h3 className="font-bold text-slate-900">
-                            How to import your VCF
+                    <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[2px] text-[#72836B]">
+                            After downloading
+                        </p>
+                        <h3 className="mt-3 font-display text-xl font-semibold">
+                            Import your contacts.
                         </h3>
 
-                        <div className="mt-5 space-y-5">
-                            <div className="flex gap-3">
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#E9FAEF] text-[#168447]">
-                                    <Icon name="phone" size={17} />
-                                </div>
-
+                        <div className="mt-5 divide-y divide-[#E1E1D8] border-y border-[#E1E1D8]">
+                            <div className="flex gap-4 py-5">
+                                <Icon
+                                    name="phone"
+                                    size={20}
+                                    className="mt-1 shrink-0 text-[#657B5F]"
+                                />
                                 <div>
-                                    <p className="text-sm font-bold text-slate-800">
-                                        Android
-                                    </p>
-                                    <p className="mt-1 text-xs leading-5 text-slate-500">
-                                        Download the file, open it from your
-                                        Files app, then choose Contacts to
-                                        import the entries.
+                                    <p className="text-xs font-bold">Android</p>
+                                    <p className="mt-2 text-xs leading-6 text-[#85877D]">
+                                        Open the downloaded VCF file from your
+                                        Files app and choose the Contacts import
+                                        option.
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex gap-3">
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#E9FAEF] text-[#168447]">
-                                    <Icon name="file" size={17} />
-                                </div>
-
+                            <div className="flex gap-4 py-5">
+                                <Icon
+                                    name="file"
+                                    size={20}
+                                    className="mt-1 shrink-0 text-[#657B5F]"
+                                />
                                 <div>
-                                    <p className="text-sm font-bold text-slate-800">
-                                        iPhone
-                                    </p>
-                                    <p className="mt-1 text-xs leading-5 text-slate-500">
-                                        Open the downloaded VCF file from Files,
-                                        tap the contact preview, then choose Add
-                                        All Contacts.
+                                    <p className="text-xs font-bold">iPhone</p>
+                                    <p className="mt-2 text-xs leading-6 text-[#85877D]">
+                                        Open the VCF file in Files, view the
+                                        contact preview and choose Add All
+                                        Contacts.
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
         </div>
     );

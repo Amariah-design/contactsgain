@@ -7,85 +7,104 @@ const links = [
 ];
 
 export default function Sidebar({ page, setPage, open, setOpen }) {
+    const navigate = (id) => {
+        setPage(id);
+        setOpen(false);
+    };
+
     return (
         <>
             {open && (
                 <button
                     aria-label="Close navigation"
                     onClick={() => setOpen(false)}
-                    className="fixed inset-0 z-40 bg-slate-950/40 lg:hidden"
+                    className="fixed inset-0 z-40 bg-[#172219]/40 lg:hidden"
                 />
             )}
 
             <aside
-                className={`fixed inset-y-0 left-0 z-50 flex w-65 flex-col border-r border-slate-200 bg-white transition-transform duration-300 lg:translate-x-0 ${
+                className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col border-r border-[#E8E6DD] bg-[#F1F0E9] transition-transform duration-300 lg:translate-x-0 ${
                     open ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
-                <div className="flex h-20 items-center gap-3 border-b border-slate-100 px-7">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-slate-950">
-                        <Icon name="message" size={22} />
+                <div className="flex h-[76px] items-center gap-3 border-b border-[#E2E0D7] px-7">
+                    <div className="flex h-10 w-10 items-center justify-center bg-[#293D2D] text-[#DDE8D5]">
+                        <Icon name="users" size={21} />
                     </div>
+
                     <div>
-                        <p className="text-[15px] font-extrabold tracking-tight text-slate-900">
-                            LINKY
+                        <p className="font-display text-[17px] font-bold tracking-[-1px] text-[#293D2D]">
+                            contacts gain
                         </p>
-                        <p className="text-[10px] font-semibold uppercase tracking-[2px] text-slate-400">
-                            Contact exchange
+                        <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[2px] text-[#8B8D80]">
+                            Connect collectively
                         </p>
                     </div>
                 </div>
 
-                <div className="px-5 pt-8">
-                    <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[1.8px] text-slate-400">
-                        Workspace
+                <div className="px-5 pt-10">
+                    <p className="mb-4 px-3 text-[9px] font-bold uppercase tracking-[2px] text-[#929386]">
+                        Navigation
                     </p>
 
                     <nav className="space-y-1">
-                        {links.map((link) => (
-                            <button
-                                key={link.id}
-                                onClick={() => {
-                                    setPage(link.id);
-                                    setOpen(false);
-                                }}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold transition ${
-                                    page === link.id
-                                        ? "bg-[#E9FAEF] text-[#087B3C]"
-                                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                                }`}
-                            >
-                                <Icon name={link.icon} size={19} />
-                                {link.label}
-                                {page === link.id && (
-                                    <span className="ml-auto h-2 w-2 rounded-full bg-[#25D366]" />
-                                )}
-                            </button>
-                        ))}
+                        {links.map((link, index) => {
+                            const active = page === link.id;
+
+                            return (
+                                <button
+                                    key={link.id}
+                                    onClick={() => navigate(link.id)}
+                                    className={`group flex w-full items-center gap-3 px-3 py-3.5 text-left transition ${
+                                        active
+                                            ? "bg-[#293D2D] text-white"
+                                            : "text-[#74786D] hover:bg-[#E6E6DC] hover:text-[#293D2D]"
+                                    }`}
+                                >
+                                    <Icon
+                                        name={link.icon}
+                                        size={18}
+                                        className={
+                                            active ? "text-[#DDE8D5]" : ""
+                                        }
+                                    />
+                                    <span className="text-[12px] font-semibold">
+                                        {link.label}
+                                    </span>
+                                    {active && (
+                                        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#C6D7B8]" />
+                                    )}
+                                </button>
+                            );
+                        })}
                     </nav>
                 </div>
 
                 <div className="mt-auto p-5">
-                    <div className="rounded-2xl bg-slate-950 p-5 text-white">
-                        <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-[#25D366]">
-                            <Icon name="shield" size={19} />
-                        </div>
-                        <p className="text-sm font-bold">
-                            Exchange responsibly
+                    <div className="border border-[#DFDED3] bg-[#E9E9DF] p-5">
+                        <p className="text-[9px] font-bold uppercase tracking-[1.8px] text-[#85877D]">
+                            A shared principle
                         </p>
-                        <p className="mt-2 text-xs leading-5 text-slate-400">
-                            Only share contacts you own or have permission to
-                            submit.
+                        <h3 className="mt-3 font-display text-lg font-semibold leading-tight text-[#293D2D]">
+                            Give a contact.
+                            <br />
+                            Gain a connection.
+                        </h3>
+                        <p className="mt-3 text-[11px] leading-5 text-[#777B70]">
+                            Participate respectfully. Only share numbers you own
+                            or have permission to submit.
                         </p>
                         <button
-                            onClick={() => setPage("support")}
-                            className="mt-4 flex items-center gap-2 text-xs font-bold text-[#25D366]"
+                            onClick={() => navigate("support")}
+                            className="mt-4 flex items-center gap-2 text-[11px] font-bold text-[#405A43]"
                         >
-                            Community rules <Icon name="arrow" size={14} />
+                            Read community rules
+                            <Icon name="arrow" size={13} />
                         </button>
                     </div>
-                    <p className="mt-5 text-center text-[10px] text-slate-400">
-                        LINKY© 2026
+
+                    <p className="mt-5 px-1 text-[9px] font-semibold tracking-[1.5px] text-[#A1A296]">
+                        CONTACTS GAIN / 2026
                     </p>
                 </div>
             </aside>
